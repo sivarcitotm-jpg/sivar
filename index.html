@@ -633,6 +633,13 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   padding:12px 14px;color:var(--ink);font:inherit;font-size:15px;outline:none;transition:.16s}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--acc)}
 .field .hint{font-size:12px;color:var(--muted);margin:6px 0 0;line-height:1.5}
+.link-btn{background:none;border:0;padding:8px 0 0;font:inherit;font-size:13px;font-weight:600;color:var(--acc-deep);
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.link-btn:hover{color:var(--acc)}
+.otro-box{margin-top:10px}
+.otro-box input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;color:var(--ink);font:inherit;font-size:15px;outline:none}
+.otro-box input:focus{border-color:var(--acc)}
 .field .hint a{color:var(--acc-deep);text-decoration:underline;text-underline-offset:2px}
 .field label.doc-drop{display:flex;align-items:center;gap:14px;border:1.5px dashed #b9c9da;border-radius:14px;padding:12px;
   background:var(--surface);cursor:pointer;transition:.16s;margin:0;
@@ -824,7 +831,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <p style="color:var(--muted);font-size:14.5px;line-height:1.8;margin:0">
           Scooter eléctrico plegable con motor de 300 W (500 W de pico), llantas neumáticas de 10",
           suspensión delantera, freno de tambor delantero con E-ABS trasero y faro LED.
-          Entrega y devolución en nuestros puntos: <span class="js-puntos">Metrocentro, Centro Comercial Terrazas (29 Calle Poniente) o Centro Histórico</span>.
+          Entrega y devolución en nuestros puntos: <span class="js-puntos">Parque Cuscatlán · Plaza León (frente a Las Terrazas)</span>.
         </p>
         <div class="specs">
           <div class="spec"><b>25 km</b><span>Autonomía</span></div>
@@ -935,7 +942,8 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
       <details>
         <summary>Entrega, devolución y retrasos</summary>
         <ul>
-          <li>La entrega y la devolución se hacen en el <b>punto que elijas al reservar</b>: <span class="js-puntos">Metrocentro, Centro Comercial Terrazas (29 Calle Poniente) o Centro Histórico</span>. La hora se coordina por WhatsApp.</li>
+          <li>La entrega y la devolución se hacen en el <b>punto que elijas al reservar</b>: <span class="js-puntos">Parque Cuscatlán · Plaza León (frente a Las Terrazas)</span>. La hora se coordina por WhatsApp.</li>
+          <li>¿No conoces esas ubicaciones? Al reservar elige <b>“coordinar otro punto”</b> y acordamos contigo por WhatsApp un lugar cercano, según disponibilidad.</li>
           <li>Si necesitas cambiar de punto, avísanos por WhatsApp con al menos 24 horas de anticipación.</li>
           <li>El scooter se revisa junto al cliente al entregarlo y al devolverlo.</li>
           <li>Cada día de retraso sin aviso se cobra a la tarifa diaria vigente.</li>
@@ -1108,6 +1116,12 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
           <select id="f-punto" name="punto" required>
             <option value="" disabled selected>Elige el que más te convenga</option>
           </select>
+          <button type="button" class="link-btn" id="btn-otro-punto">No conozco esas ubicaciones · coordinar otro punto</button>
+          <div class="otro-box" id="otro-box" hidden>
+            <input id="f-punto-otro" maxlength="120" placeholder="¿Dónde te queda mejor? (opcional) Ej. Colonia Escalón">
+            <p class="hint">Te escribiremos por WhatsApp para acordar el lugar de entrega. También puedes
+              <a href="#" id="otro-wa" target="_blank" rel="noopener">preguntarnos ahora</a>.</p>
+          </div>
         </div>
         <div class="field">
           <label for="f-notas">Notas (hora preferida, etc.)</label>
@@ -1177,7 +1191,8 @@ const CONFIG = {
   PRECIO_MES: 180,         // cada 30 días
   DIAS_MES: 30,
   DEPOSITO: 25,
-  PUNTOS_ENTREGA: ["Metrocentro", "Centro Comercial Terrazas, 29 Calle Poniente", "Centro Histórico"],
+  PUNTOS_ENTREGA: ["Parque Cuscatlán", "Plaza León (frente a Las Terrazas)"],
+  PUNTO_OTRO: "Otro punto (coordinar por WhatsApp)",   // mismo texto que PUNTO_OTRO en Code.gs
   PAGOS_EN_LINEA: false
 };
 
@@ -1927,6 +1942,18 @@ $('#f-foto').addEventListener('change', async (e) => {
   }
 });
 
+/* ---- Punto de entrega: "No conozco esas ubicaciones" elige la opción de coordinar otro ---- */
+function actualizarOtroPunto(){
+  $('#otro-box').hidden = $('#f-punto').value !== CONFIG.PUNTO_OTRO;
+}
+$('#f-punto').addEventListener('change', actualizarOtroPunto);
+$('#btn-otro-punto').addEventListener('click', () => {
+  $('#f-punto').value = CONFIG.PUNTO_OTRO;
+  actualizarOtroPunto();
+  $('#f-punto-otro').focus();
+});
+$('#form-reserva').addEventListener('reset', () => setTimeout(actualizarOtroPunto));
+
 $('#f-tipodoc').addEventListener('change', () => {
   $('#f-numdoc').placeholder = $('#f-tipodoc').value === 'DUI' ? '01234567-8' : 'Número tal como aparece';
 });
@@ -1967,6 +1994,7 @@ $('#form-reserva').addEventListener('submit', async (e) => {
     inicio:   $('#f-inicio').value,
     fin:      $('#f-fin').value,
     punto:    $('#f-punto').value,
+    puntoOtro: $('#f-punto').value === CONFIG.PUNTO_OTRO ? $('#f-punto-otro').value.trim() : '',
     notas:    $('#f-notas').value.trim(),
     acepta:   $('#f-acepta').checked,
     foto:     fotoDoc
@@ -2095,8 +2123,10 @@ function aplicarContacto(){
   $$('.js-puntos').forEach(e => e.textContent = lista);
   const sel = $('#f-punto'), elegido = sel.value;
   sel.innerHTML = '<option value="" disabled>Elige el que más te convenga</option>' +
-    puntos.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
-  sel.value = puntos.includes(elegido) ? elegido : '';
+    puntos.concat(CONFIG.PUNTO_OTRO).map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  sel.value = puntos.includes(elegido) || elegido === CONFIG.PUNTO_OTRO ? elegido : '';
+  $('#otro-wa').href = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' +
+    encodeURIComponent('Hola ' + CONFIG.NEGOCIO + ', no conozco los puntos de entrega. ¿Podemos coordinar otro lugar?');
 }
 
 $('#prev').addEventListener('click', () => { state.cursor.setMonth(state.cursor.getMonth() - 1); pintarCalendario(); });

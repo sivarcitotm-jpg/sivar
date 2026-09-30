@@ -62,7 +62,7 @@ const CONFIG_INICIAL = [
   ['deposito', 25, 'Depósito reembolsable que se entrega al recibir el scooter. NO se cobra por Wompi. 0 = sin depósito'],
   ['telefono', '+503 6272-5022', 'Teléfono para llamadas que aparece en la página'],
   ['whatsapp', '50362725022', 'Número de WhatsApp sin + ni espacios'],
-  ['puntosEntrega', 'Metrocentro | Centro Comercial Terrazas, 29 Calle Poniente | Centro Histórico', 'Puntos de entrega y devolución que el cliente puede elegir, separados por |'],
+  ['puntosEntrega', 'Parque Cuscatlán | Plaza León (frente a Las Terrazas)', 'Puntos de entrega y devolución que el cliente puede elegir, separados por |'],
   ['urlSitio', '', 'Dirección pública de la página (https://…). Wompi regresa aquí al cliente después de pagar'],
   ['minutosPago', 30, 'Minutos que se apartan las fechas mientras el cliente paga en Wompi'],
   ['wompiPruebas', 'NO', 'SI = acepta pagos de prueba de Wompi como pagados. Déjalo en NO cuando cobres de verdad']
@@ -207,7 +207,7 @@ function instalarDisparadores(ss) {
 // Pasa la hoja Config a las tarifas y el contacto actuales (se ejecuta una vez).
 function actualizarTarifas() {
   const cfg = libro().getSheetByName(HOJAS.config.nombre);
-  const forzar = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'telefono', 'whatsapp'];
+  const forzar = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'telefono', 'whatsapp', 'puntosEntrega'];
   const datos = cfg.getDataRange().getValues();
   for (let i = datos.length - 1; i >= 1; i--) {
     const clave = String(datos[i][0]).trim();
@@ -349,6 +349,9 @@ function leerConfig() {
   return c;
 }
 
+// Opción para quien no conoce los puntos fijos: el lugar se acuerda después por WhatsApp
+const PUNTO_OTRO = 'Otro punto (coordinar por WhatsApp)';
+
 function puntosEntrega(cfg) {
   return String(cfg.puntosEntrega || '').split(/[|\n]+/).map(s => s.trim()).filter(Boolean);
 }
@@ -455,7 +458,11 @@ function reservar(p) {
   if (errDoc) return { ok: false, error: errDoc };
   if (!p.foto) return { ok: false, error: 'Falta la foto del documento.' };
   const cfg = leerConfig();
-  const punto = puntosEntrega(cfg).find(x => x === String(p.punto || '').trim());
+  let punto = puntosEntrega(cfg).find(x => x === String(p.punto || '').trim());
+  if (!punto && p.punto === PUNTO_OTRO) {
+    const sugerido = String(p.puntoOtro || '').trim().slice(0, 120);
+    punto = PUNTO_OTRO + (sugerido ? ': ' + sugerido : '');
+  }
   if (!punto) return { ok: false, error: 'Elige un punto de entrega.' };
   if (p.acepta !== true) return { ok: false, error: 'Debes aceptar las políticas de alquiler y privacidad.' };
   if (!reISO.test(p.inicio || '') || !reISO.test(p.fin || '')) return { ok: false, error: 'Fechas inválidas.' };
@@ -483,7 +490,7 @@ function reservar(p) {
       'Nombre': limpio(nombre, 100), 'Teléfono': limpio(p.telefono, 30), 'Email': limpio(p.email, 120),
       'Tipo documento': p.tipoDoc, 'N.º documento': limpio(String(p.numDoc).toUpperCase(), 30),
       'Foto documento': foto.getUrl(),
-      'Punto de entrega': punto,
+      'Punto de entrega': limpio(punto, 180),
       'Inicio': p.inicio, 'Fin': p.fin, 'Días': dias, 'Total': total, 'Notas': limpio(p.notas, 500),
       'Estado': pagosEnLinea ? 'Pago pendiente' : 'Pendiente'
     });
