@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sivarcito™ — Alquiler de patinetes y accesorios tech</title>
-<meta name="description" content="Sivarcito: alquiler de patinetes eléctricos con equipo de seguridad incluido y venta de accesorios tecnológicos.">
+<title>Sivarcito™ — Alquiler de scooters y accesorios tech</title>
+<meta name="description" content="Sivarcito: alquiler de scooters eléctricos con equipo de seguridad incluido y venta de accesorios tecnológicos.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -786,7 +786,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
 
     <div class="hero__content">
       <h1 class="hero__title">
-        <span class="hero__line anim" style="--d:9">Alquila tu <span class="hl">patinete,</span></span>
+        <span class="hero__line anim" style="--d:9">Alquila tu <span class="hl">scooter,</span></span>
         <span class="hero__line anim" style="--d:10">equípate con lo mejor</span>
       </h1>
 
@@ -995,12 +995,12 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
             </svg>
           </span>
         </a>
-        <p>Alquiler de patinetes eléctricos con equipo de seguridad incluido y venta de accesorios tecnológicos.</p>
+        <p>Alquiler de scooters eléctricos con equipo de seguridad incluido y venta de accesorios tecnológicos.</p>
       </div>
       <div class="reveal" style="--d:1">
         <h5>Secciones</h5>
         <ul>
-          <li><a href="#alquiler">Alquiler de patinete</a></li>
+          <li><a href="#alquiler">Alquiler de scooter</a></li>
           <li><a href="#seguridad">Accesorios de seguridad</a></li>
           <li><a href="#tienda">Tienda</a></li>
           <li><a href="#politicas">Políticas y privacidad</a></li>
@@ -1060,7 +1060,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   <div class="box">
     <button class="x" onclick="cerrarModal()" aria-label="Cerrar">&times;</button>
     <div id="modal-form">
-      <h3>Reservar patinete</h3>
+      <h3>Reservar scooter</h3>
       <p class="sub">Completa tus datos para registrarte y apartar tus fechas. Te contactaremos a este número.</p>
       <form id="form-reserva" autocomplete="on">
         <div class="field">
@@ -2092,7 +2092,7 @@ function mostrarAviso(){
    ========================================================= */
 function aplicarContacto(){
   const wa = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' +
-             encodeURIComponent('Hola ' + CONFIG.NEGOCIO + ', quiero información sobre el alquiler del patinete.');
+             encodeURIComponent('Hola ' + CONFIG.NEGOCIO + ', quiero información sobre el alquiler del scooter.');
   const tel = 'tel:' + CONFIG.TELEFONO.replace(/[^+\d]/g, '');
   $('#tel-link').textContent = CONFIG.TELEFONO;
   $('#tel-link').href = tel;
