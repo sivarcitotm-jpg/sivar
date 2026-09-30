@@ -629,9 +629,39 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
 .modal .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.field input,.field textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+.field input,.field textarea,.field select{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;
   padding:12px 14px;color:var(--ink);font:inherit;font-size:15px;outline:none;transition:.16s}
-.field input:focus,.field textarea:focus{border-color:var(--acc)}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--acc)}
+.field .hint{font-size:12px;color:var(--muted);margin:6px 0 0;line-height:1.5}
+.field .hint a{color:var(--acc-deep);text-decoration:underline;text-underline-offset:2px}
+.field label.doc-drop{display:flex;align-items:center;gap:14px;border:1.5px dashed #b9c9da;border-radius:14px;padding:12px;
+  background:var(--surface);cursor:pointer;transition:.16s;margin:0;
+  text-transform:none;letter-spacing:0;font-size:inherit;font-weight:400;color:inherit;position:relative}
+.doc-drop:hover{border-color:var(--acc)}
+.doc-drop input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.doc-drop .thumb{width:64px;height:44px;border-radius:8px;background:#dce6f0;flex:0 0 auto;object-fit:cover;display:grid;place-items:center;color:var(--muted);font-size:20px}
+.doc-drop .txt{font-size:13.5px;color:var(--muted);line-height:1.45}
+.doc-drop .txt b{color:var(--ink);display:block;font-weight:600}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;margin:4px 0 2px;cursor:pointer}
+.check input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--acc);flex:0 0 auto}
+.check a{color:var(--acc-deep);text-decoration:underline;text-underline-offset:2px}
+
+/* ---- políticas ---- */
+.pol{display:grid;gap:12px;max-width:860px}
+.pol details{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:0 20px;transition:border-color .2s}
+.pol details[open]{border-color:rgba(30,140,232,.45)}
+.pol summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:17px 0;font-weight:600;font-size:15.5px}
+.pol summary::-webkit-details-marker{display:none}
+.pol summary::after{content:"+";font-size:22px;font-weight:400;color:var(--acc);transition:transform .25s var(--ease-out)}
+.pol details[open] summary::after{transform:rotate(45deg)}
+.pol ul{margin:0 0 18px;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.75}
+.pol li{margin-bottom:4px}
+.pol li b{color:var(--ink);font-weight:600}
+.pol-note{color:var(--muted);font-size:12.5px;margin-top:18px}
+.aviso ul{margin:0 0 18px;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.7}
+.aviso li{margin-bottom:6px}
+.aviso li b{color:var(--ink);font-weight:600}
 .field textarea{resize:vertical;min-height:72px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .modal .x{float:right;background:none;border:0;color:var(--muted);font-size:26px;cursor:pointer;line-height:1;margin:-8px -6px 0 0}
@@ -675,6 +705,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
     <li><a href="#alquiler">Alquiler</a></li>
     <li><a href="#seguridad">Seguridad</a></li>
     <li><a href="#tienda">Tienda</a></li>
+    <li><a href="#politicas">Políticas</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <button class="burger" data-nav-toggle type="button"
@@ -736,6 +767,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <li class="anim" style="--d:4"><a href="#alquiler">Alquiler</a></li>
         <li class="anim" style="--d:5"><a href="#seguridad">Seguridad</a></li>
         <li class="anim" style="--d:6"><a href="#tienda">Tienda</a></li>
+        <li class="anim" style="--d:7"><a href="#politicas">Políticas</a></li>
         <li class="anim" style="--d:7"><a href="#contacto">Contacto</a></li>
       </ul>
 
@@ -751,7 +783,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <span class="hero__line anim" style="--d:10">equípate con lo mejor</span>
       </h1>
 
-      <p class="hero__text anim" style="--d:11">Scooter Xiaomi 6 por día o por semana, con casco, coderas y rodilleras incluidas. Consulta el calendario en tiempo real, elige tus fechas y reserva en menos de un minuto.</p>
+      <p class="hero__text anim" style="--d:11">Scooter Xiaomi 6 por día, semana o mes, con casco, coderas y rodilleras incluidas. Consulta el calendario en tiempo real, elige tus fechas y reserva en menos de un minuto.</p>
 
       <a class="cta" href="#alquiler">
         <span class="cta__label anim" style="--d:12">Ver disponibilidad</span>
@@ -788,11 +820,11 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
                alt="Scooter Xiaomi 6, vista lateral">
         </div>
         <span class="tagline">Scooter Xiaomi 6</span>
-        <div class="price-row"><b id="precio-dia">$8</b><span>/ día · $45 por semana</span></div>
+        <div class="price-row"><b id="precio-dia">$20</b><span id="precio-extra">/ día · desde 7 días $7/día ($49 la semana) · $180 el mes</span></div>
         <p style="color:var(--muted);font-size:14.5px;line-height:1.8;margin:0">
           Scooter eléctrico plegable con motor de 300 W (500 W de pico), llantas neumáticas de 10",
           suspensión delantera, freno de tambor delantero con E-ABS trasero y faro LED.
-          Entrega y recogida a domicilio dentro de la ciudad.
+          Entrega y devolución en nuestros puntos: <span class="js-puntos">Metrocentro, Centro Comercial Terrazas (29 Calle Poniente) o Centro Histórico</span>.
         </p>
         <div class="specs">
           <div class="spec"><b>25 km</b><span>Autonomía</span></div>
@@ -803,7 +835,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
 
         <div class="contact-box" id="contacto">
           <div class="lbl">Contacto del arrendador</div>
-          <a class="tel" id="tel-link" href="#">+503 7000-0000</a>
+          <a class="tel" id="tel-link" href="#">+503 6272-5022</a>
           <div class="acts">
             <a class="btn btn-d" id="wa-link" href="#" target="_blank" rel="noopener">WhatsApp</a>
             <a class="btn btn-g" id="call-link" href="#">Llamar</a>
@@ -860,6 +892,89 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   </div>
 </section>
 
+<!-- ================= POLÍTICAS ================= -->
+<section class="block" id="politicas">
+  <div class="wrap">
+    <div class="head reveal">
+      <span>04 · Políticas</span>
+      <h2>Políticas de alquiler y privacidad</h2>
+      <p>Léelas antes de reservar. Al confirmar una reserva aceptas estas condiciones.</p>
+    </div>
+    <div class="pol reveal" style="--d:1">
+      <details open>
+        <summary>Tarifas y pago</summary>
+        <ul>
+          <li><b>De 1 a 6 días:</b> <span class="js-p-dia">$20</span> por día.</li>
+          <li><b>7 días o más:</b> <span class="js-p-sem">$7</span> por día (una semana de lunes a domingo = <span class="js-p-sem7">$49</span>).</li>
+          <li><b>Mes (30 días):</b> <span class="js-p-mes">$180</span>. Los días extra se cobran a la tarifa semanal, sin pasar del precio de un mes.</li>
+          <li>El monto lo calcula el sistema de Sivarcito al reservar y es el mismo que se cobra en <b>Wompi</b>; no puede modificarse desde la página.</li>
+          <li>Por Wompi se paga <b>solo el alquiler del scooter</b>. Los artículos de la tienda se coordinan por WhatsApp.</li>
+          <li>Tus fechas quedan apartadas <b>30 minutos</b> mientras pagas. Si no se completa el pago, se liberan.</li>
+          <li class="js-dep-li">Depósito reembolsable de <span class="js-p-dep">$25</span>: se entrega al recibir el scooter y se devuelve al regresarlo en buen estado. No se cobra en línea.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Requisitos para alquilar</summary>
+        <ul>
+          <li>Ser <b>mayor de 18 años</b>.</li>
+          <li>Presentar un documento de identidad vigente: <b>DUI, pasaporte o licencia de conducir</b>. Se sube una foto al reservar y se muestra el original al recibir el scooter.</li>
+          <li>El nombre del documento debe coincidir con el de la reserva. Sivarcito puede negar la entrega si los datos no coinciden.</li>
+          <li>Un teléfono con WhatsApp activo para coordinar entrega, recogida y cualquier imprevisto.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Uso del scooter y seguridad</summary>
+        <ul>
+          <li>El <b>casco es obligatorio</b> durante todo el recorrido; se entrega junto con coderas y rodilleras.</li>
+          <li>Solo puede conducirlo la persona que reservó. <b>Una persona a la vez</b>, máximo 100 kg.</li>
+          <li>Respeta las normas de tránsito. No se permite conducir bajo efectos de alcohol o drogas, ni usarlo en competencias o terrenos no pavimentados.</li>
+          <li>No se permite prestarlo, subarrendarlo ni sacarlo del país.</li>
+          <li>Las multas o sanciones de tránsito durante el alquiler son responsabilidad del cliente.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Entrega, devolución y retrasos</summary>
+        <ul>
+          <li>La entrega y la devolución se hacen en el <b>punto que elijas al reservar</b>: <span class="js-puntos">Metrocentro, Centro Comercial Terrazas (29 Calle Poniente) o Centro Histórico</span>. La hora se coordina por WhatsApp.</li>
+          <li>Si necesitas cambiar de punto, avísanos por WhatsApp con al menos 24 horas de anticipación.</li>
+          <li>El scooter se revisa junto al cliente al entregarlo y al devolverlo.</li>
+          <li>Cada día de retraso sin aviso se cobra a la tarifa diaria vigente.</li>
+          <li>Si necesitas más días, avísanos antes de que termine tu alquiler para ampliarlo según disponibilidad.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Daños, pérdida o robo</summary>
+        <ul>
+          <li>El cliente es responsable del scooter y del equipo de seguridad durante el alquiler.</li>
+          <li>Los daños por mal uso se descuentan del depósito; si el costo es mayor, se cobra la diferencia.</li>
+          <li>En caso de accidente, robo o pérdida, avisa de inmediato al <b class="js-tel-txt">+503 6272-5022</b>. En caso de robo, presenta la denuncia ante la PNC.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Cancelaciones y reembolsos</summary>
+        <ul>
+          <li>Cancelando con <b>24 horas o más</b> de anticipación al inicio: reembolso completo del alquiler.</li>
+          <li>Con menos de 24 horas o si no se presenta: el alquiler no es reembolsable.</li>
+          <li>Si Sivarcito no puede entregar el scooter en la fecha reservada, se devuelve el 100 %.</li>
+          <li>Los reembolsos se hacen por el mismo medio de pago y pueden tardar según el banco emisor.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Privacidad y documento de identidad</summary>
+        <ul>
+          <li>Tus datos (nombre, teléfono, correo, tipo y número de documento) se usan <b>solo para gestionar tu alquiler</b> y contactarte. No se venden ni se comparten con terceros, salvo que la ley lo exija.</li>
+          <li>La <b>foto de tu documento</b> se guarda en una carpeta privada de Google Drive a la que solo accede el arrendador. Se pide como respaldo de identidad por si ocurre un daño, robo o incidente.</li>
+          <li>La foto se <b>elimina automáticamente</b> cuando el scooter se marca como devuelto, o si la reserva se cancela o no se paga en 24 horas.</li>
+          <li>Tu nombre, teléfono y número de documento se conservan en el registro de alquileres como comprobante.</li>
+          <li>Los pagos se procesan en la plataforma segura de <b>Wompi</b>. Sivarcito nunca ve ni guarda los datos de tu tarjeta.</li>
+          <li>Para consultar, corregir o eliminar tus datos, escríbenos por WhatsApp.</li>
+        </ul>
+      </details>
+    </div>
+    <p class="pol-note">Última actualización: septiembre de 2026.</p>
+  </div>
+</section>
+
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
@@ -881,12 +996,13 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
           <li><a href="#alquiler">Alquiler de patinete</a></li>
           <li><a href="#seguridad">Accesorios de seguridad</a></li>
           <li><a href="#tienda">Tienda</a></li>
+          <li><a href="#politicas">Políticas y privacidad</a></li>
         </ul>
       </div>
       <div class="reveal" style="--d:2">
         <h5>Contacto</h5>
         <ul>
-          <li><a id="f-tel" href="#">+503 7000-0000</a></li>
+          <li><a id="f-tel" href="#">+503 6272-5022</a></li>
           <li><a id="f-mail" href="#">ventas@sivarcito.com</a></li>
           <li>Lun – Dom · 7:00 a.m. – 8:00 p.m.</li>
         </ul>
@@ -915,7 +1031,9 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
       <li style="--i:2"><a class="navsheet__link" href="#tienda">Tienda
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-      <li style="--i:3"><a class="navsheet__link" href="#contacto">Contacto
+      <li style="--i:3"><a class="navsheet__link" href="#politicas">Políticas
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li style="--i:4"><a class="navsheet__link" href="#contacto">Contacto
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
     </ul>
     <div class="navsheet__foot">
@@ -936,21 +1054,44 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
     <button class="x" onclick="cerrarModal()" aria-label="Cerrar">&times;</button>
     <div id="modal-form">
       <h3>Reservar patinete</h3>
-      <p class="sub">Completa tus datos. Te confirmaremos por WhatsApp en pocos minutos.</p>
+      <p class="sub">Completa tus datos para registrarte y apartar tus fechas. Te contactaremos a este número.</p>
       <form id="form-reserva" autocomplete="on">
         <div class="field">
           <label for="f-nombre">Nombre completo *</label>
-          <input id="f-nombre" name="nombre" required placeholder="Ej. Ana Martínez">
+          <input id="f-nombre" name="nombre" required minlength="3" maxlength="100" placeholder="Como aparece en tu documento" autocomplete="name">
         </div>
         <div class="two">
           <div class="field">
-            <label for="f-telefono">Teléfono *</label>
-            <input id="f-telefono" name="telefono" required placeholder="7000-0000" inputmode="tel">
+            <label for="f-telefono">Teléfono / WhatsApp *</label>
+            <input id="f-telefono" name="telefono" required placeholder="7000-0000" inputmode="tel" autocomplete="tel">
           </div>
           <div class="field">
             <label for="f-email">Correo</label>
-            <input id="f-email" name="email" type="email" placeholder="tu@correo.com">
+            <input id="f-email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email">
           </div>
+        </div>
+        <div class="two">
+          <div class="field">
+            <label for="f-tipodoc">Documento *</label>
+            <select id="f-tipodoc" name="tipoDoc" required>
+              <option value="DUI">DUI</option>
+              <option value="Pasaporte">Pasaporte</option>
+              <option value="Licencia de conducir">Licencia de conducir</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-numdoc">Número de documento *</label>
+            <input id="f-numdoc" name="numDoc" required maxlength="20" placeholder="01234567-8" autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-foto">Foto del documento *</label>
+          <label class="doc-drop" for="f-foto">
+            <input id="f-foto" type="file" accept="image/*" required>
+            <span class="thumb" id="foto-thumb">＋</span>
+            <span class="txt"><b id="foto-lbl">Subir foto o tomarla con la cámara</b>Frente del documento, legible y sin reflejos.</span>
+          </label>
+          <p class="hint">Se guarda en privado y se elimina al devolver el scooter. <a href="#politicas" onclick="cerrarModal()">Ver política de privacidad</a>.</p>
         </div>
         <div class="two">
           <div class="field">
@@ -963,13 +1104,23 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
           </div>
         </div>
         <div class="field">
-          <label for="f-notas">Notas (dirección de entrega, hora, etc.)</label>
-          <textarea id="f-notas" name="notas" placeholder="Entregar a las 9:00 a.m. en…"></textarea>
+          <label for="f-punto">Punto de entrega y devolución *</label>
+          <select id="f-punto" name="punto" required>
+            <option value="" disabled selected>Elige el que más te convenga</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-notas">Notas (hora preferida, etc.)</label>
+          <textarea id="f-notas" name="notas" placeholder="Me conviene recogerlo a las 9:00 a.m."></textarea>
         </div>
         <div class="resume" id="resume-modal"></div>
-        <button class="btn btn-p" id="btn-enviar" type="submit" style="width:100%;margin-top:16px">Confirmar reserva</button>
+        <label class="check" style="margin-top:14px">
+          <input type="checkbox" id="f-acepta" required>
+          <span>Soy mayor de 18 años y acepto las <a href="#politicas" onclick="cerrarModal()">políticas de alquiler y privacidad</a>, incluido el uso de la foto de mi documento.</span>
+        </label>
+        <button class="btn btn-p" id="btn-enviar" type="submit" style="width:100%;margin-top:16px">Continuar al pago</button>
         <p style="color:var(--muted);font-size:12px;text-align:center;margin:10px 0 0">
-          La reserva queda como <b>pendiente</b> hasta que el arrendador la confirme.
+          El total final lo calcula nuestro sistema y es el que se cobra en Wompi.
         </p>
       </form>
     </div>
@@ -979,12 +1130,30 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1e8ce8" stroke-width="2.4"
                stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
         </div>
-        <h3>¡Reserva enviada!</h3>
+        <h3 id="ok-titulo">¡Reserva registrada!</h3>
         <p class="sub" id="ok-msg"></p>
-        <a class="btn btn-d" id="ok-wa" href="#" target="_blank" rel="noopener" style="width:100%">Confirmar por WhatsApp</a>
+        <a class="btn btn-p" id="ok-pagar" href="#" style="width:100%;display:none;margin-bottom:10px">Pagar con Wompi</a>
+        <a class="btn btn-d" id="ok-wa" href="#" target="_blank" rel="noopener" style="width:100%">Escribir por WhatsApp</a>
         <button class="btn btn-g" onclick="cerrarModal()" style="width:100%;margin-top:10px">Cerrar</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ================= AVISO DE ENTRADA ================= -->
+<div class="modal" id="aviso" role="dialog" aria-modal="true" aria-labelledby="aviso-t">
+  <div class="box aviso">
+    <h3 id="aviso-t">Antes de continuar</h3>
+    <p class="sub">Resumen de nuestras políticas de alquiler y privacidad.</p>
+    <ul>
+      <li><b>Pago seguro con Wompi:</b> el total lo calcula nuestro sistema; por Wompi se paga solo el alquiler del scooter.</li>
+      <li><b>Identificación:</b> para alquilar pedimos DUI, pasaporte o licencia de conducir y una foto del documento. Debes ser mayor de 18 años.</li>
+      <li><b>Tu documento se borra:</b> la foto se guarda en privado y se elimina al devolver el scooter, o si la reserva se cancela o no se paga.</li>
+      <li><b>Casco obligatorio</b> y uso responsable. Los daños por mal uso se descuentan del depósito.</li>
+      <li><b>Cancelaciones:</b> reembolso completo cancelando con 24 horas o más de anticipación.</li>
+    </ul>
+    <button class="btn btn-p" id="aviso-ok" type="button" style="width:100%">Entendido, continuar</button>
+    <a class="btn btn-g" href="#politicas" id="aviso-leer" style="width:100%;margin-top:10px">Leer políticas completas</a>
   </div>
 </div>
 
@@ -997,13 +1166,19 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
 const CONFIG = {
   API_URL: "https://script.google.com/macros/s/AKfycbzJ7Br96UfDgFxPLebTaFqVKPfyCdcMsDUihGLSLKDhh_2vrXnKm583IuHwE4KJFTKY/exec",                    // URL /exec del despliegue de Google Apps Script
   NEGOCIO:   "Sivarcito",
-  TELEFONO:  "+503 7000-0000",
-  WHATSAPP:  "50370000000",
+  TELEFONO:  "+503 6272-5022",
+  WHATSAPP:  "50362725022",
   EMAIL:     "ventas@sivarcito.com",
   MONEDA:    "$",
-  PRECIO_DIA: 8,
-  PRECIO_SEMANA: 45,
-  DEPOSITO: 25
+  // Solo para MOSTRAR un estimado. El monto que se cobra lo calcula Code.gs con la hoja Config.
+  PRECIO_DIA: 20,          // 1 a 6 días
+  PRECIO_DIA_SEMANA: 7,    // 7 días o más
+  DIAS_SEMANA: 7,
+  PRECIO_MES: 180,         // cada 30 días
+  DIAS_MES: 30,
+  DEPOSITO: 25,
+  PUNTOS_ENTREGA: ["Metrocentro", "Centro Comercial Terrazas, 29 Calle Poniente", "Centro Histórico"],
+  PAGOS_EN_LINEA: false
 };
 
 const $  = (s) => document.querySelector(s);
@@ -1502,9 +1677,12 @@ function diasEntre(i, f){
   if (!f) return 1;
   return Math.round((parseISO(f) - parseISO(i)) / 86400000) + 1;
 }
+// Misma fórmula que precioAlquiler() en Code.gs — aquí solo es un estimado visual.
+function tarifaDia(dias){ return dias >= CONFIG.DIAS_SEMANA ? CONFIG.PRECIO_DIA_SEMANA : CONFIG.PRECIO_DIA; }
 function totalDe(dias){
   if (!dias) return 0;
-  return Math.floor(dias / 7) * CONFIG.PRECIO_SEMANA + (dias % 7) * CONFIG.PRECIO_DIA;
+  const meses = Math.floor(dias / CONFIG.DIAS_MES), resto = dias % CONFIG.DIAS_MES;
+  return Math.round((meses * CONFIG.PRECIO_MES + Math.min(resto * tarifaDia(dias), CONFIG.PRECIO_MES)) * 100) / 100;
 }
 const noches = () => diasEntre(state.inicio, state.fin);
 const calcularTotal = () => totalDe(noches());
@@ -1515,7 +1693,8 @@ function htmlResumen(){
   return `<div class="r"><span>Inicio</span><b>${fechaLarga(parseISO(state.inicio))}</b></div>
     <div class="r"><span>Fin</span><b>${state.fin ? fechaLarga(parseISO(state.fin)) : 'Elige la fecha de fin'}</b></div>
     <div class="r"><span>Días</span><b>${n}</b></div>
-    <div class="r"><span>Depósito reembolsable</span><b>${money(CONFIG.DEPOSITO)}</b></div>
+    <div class="r"><span>Tarifa</span><b>${n >= CONFIG.DIAS_MES ? money(CONFIG.PRECIO_MES) + ' / mes' : money(tarifaDia(n)) + ' / día'}</b></div>
+    ${CONFIG.DEPOSITO > 0 ? `<div class="r"><span>Depósito (al recibir, no en línea)</span><b>${money(CONFIG.DEPOSITO)}</b></div>` : ''}
     <div class="r tot"><span>Total del alquiler</span><b>${money(total)}</b></div>`;
 }
 function pintarResumen(){
@@ -1534,11 +1713,17 @@ async function cargarDisponibilidad(){
     const r = await api({action:'disponibilidad'});
     state.ocupadas = new Set(r.ocupadas || []);
     if (r.config){
-      if (r.config.precioDia)    CONFIG.PRECIO_DIA = Number(r.config.precioDia);
-      if (r.config.precioSemana) CONFIG.PRECIO_SEMANA = Number(r.config.precioSemana);
-      if (r.config.deposito)     CONFIG.DEPOSITO = Number(r.config.deposito);
-      if (r.config.telefono)     CONFIG.TELEFONO = r.config.telefono;
-      if (r.config.whatsapp)     CONFIG.WHATSAPP = String(r.config.whatsapp);
+      const c = r.config, num = (v) => v !== undefined && v !== '' && !isNaN(Number(v));
+      if (num(c.precioDia))       CONFIG.PRECIO_DIA = Number(c.precioDia);
+      if (num(c.precioDiaSemana)) CONFIG.PRECIO_DIA_SEMANA = Number(c.precioDiaSemana);
+      if (num(c.diasSemana))      CONFIG.DIAS_SEMANA = Number(c.diasSemana) || 7;
+      if (num(c.precioMes))       CONFIG.PRECIO_MES = Number(c.precioMes);
+      if (num(c.diasMes))         CONFIG.DIAS_MES = Number(c.diasMes) || 30;
+      if (num(c.deposito))        CONFIG.DEPOSITO = Number(c.deposito);
+      if (c.telefono)             CONFIG.TELEFONO = String(c.telefono);
+      if (c.whatsapp)             CONFIG.WHATSAPP = String(c.whatsapp);
+      if (Array.isArray(c.puntosEntrega) && c.puntosEntrega.length) CONFIG.PUNTOS_ENTREGA = c.puntosEntrega;
+      CONFIG.PAGOS_EN_LINEA = !!c.pagosEnLinea;
       aplicarContacto();
     }
     est.textContent = 'Disponibilidad actualizada · ' + new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
@@ -1705,62 +1890,178 @@ function rangoLibre(i, f){
   return true;
 }
 
+/* ---- Foto del documento: se reduce en el navegador antes de enviarla ---- */
+let fotoDoc = null;   // data URL JPEG comprimida
+
+function comprimirImagen(file, max = 1600, calidad = 0.82){
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      resolve(c.toDataURL('image/jpeg', calidad));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('imagen')); };
+    img.src = url;
+  });
+}
+
+$('#f-foto').addEventListener('change', async (e) => {
+  const file = e.target.files && e.target.files[0];
+  fotoDoc = null;
+  $('#foto-thumb').outerHTML = '<span class="thumb" id="foto-thumb">＋</span>';
+  $('#foto-lbl').textContent = 'Subir foto o tomarla con la cámara';
+  if (!file) return;
+  if (!/^image\//.test(file.type)) { e.target.value = ''; return toast('Sube una imagen (foto del documento).', true); }
+  try {
+    fotoDoc = await comprimirImagen(file);
+    $('#foto-thumb').outerHTML = `<img class="thumb" id="foto-thumb" src="${fotoDoc}" alt="Vista previa del documento">`;
+    $('#foto-lbl').textContent = file.name.length > 34 ? file.name.slice(0, 31) + '…' : file.name;
+  } catch (err) {
+    e.target.value = '';
+    toast('No se pudo leer esa imagen. Prueba con otra foto.', true);
+  }
+});
+
+$('#f-tipodoc').addEventListener('change', () => {
+  $('#f-numdoc').placeholder = $('#f-tipodoc').value === 'DUI' ? '01234567-8' : 'Número tal como aparece';
+});
+
+// POST sin cabeceras personalizadas (text/plain): Apps Script lo acepta sin bloqueo CORS
+async function apiPost(datos){
+  if (!CONFIG.API_URL) throw new Error('demo');
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 45000);
+  try {
+    const r = await fetch(CONFIG.API_URL, { method: 'POST', body: JSON.stringify(datos), signal: ctrl.signal });
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+
+function mostrarResultado({titulo, html, pagoUrl, waTexto}){
+  $('#ok-titulo').textContent = titulo;
+  $('#ok-msg').innerHTML = html;
+  const pagar = $('#ok-pagar');
+  pagar.style.display = pagoUrl ? '' : 'none';
+  if (pagoUrl) pagar.href = pagoUrl;
+  $('#ok-wa').href = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + encodeURIComponent(waTexto);
+  $('#modal-form').style.display = 'none';
+  $('#modal-ok').style.display = '';
+  $('#modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
 $('#form-reserva').addEventListener('submit', async (e) => {
   e.preventDefault();
   const d = {
+    action:   'reservar',
     nombre:   $('#f-nombre').value.trim(),
     telefono: $('#f-telefono').value.trim(),
     email:    $('#f-email').value.trim(),
+    tipoDoc:  $('#f-tipodoc').value,
+    numDoc:   $('#f-numdoc').value.trim().toUpperCase(),
     inicio:   $('#f-inicio').value,
     fin:      $('#f-fin').value,
-    notas:    $('#f-notas').value.trim()
+    punto:    $('#f-punto').value,
+    notas:    $('#f-notas').value.trim(),
+    acepta:   $('#f-acepta').checked,
+    foto:     fotoDoc
   };
-  if (!d.nombre || !d.telefono || !d.inicio || !d.fin) return toast('Completa los campos obligatorios.', true);
+  if (!d.nombre || !d.telefono || !d.inicio || !d.fin || !d.numDoc) return toast('Completa los campos obligatorios.', true);
+  if (d.tipoDoc === 'DUI' && !/^\d{8}-?\d$/.test(d.numDoc)) return toast('El DUI debe tener 9 dígitos (ej. 01234567-8).', true);
+  if (!d.foto) return toast('Sube la foto de tu documento.', true);
+  if (!d.punto) return toast('Elige el punto de entrega.', true);
+  if (!d.acepta) return toast('Debes aceptar las políticas para continuar.', true);
   if (d.fin < d.inicio) return toast('La fecha de fin no puede ser anterior al inicio.', true);
   if (!rangoLibre(d.inicio, d.fin)) return toast('Ese rango incluye días ya reservados.', true);
 
   const btn = $('#btn-enviar');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Enviando…';
+  btn.innerHTML = '<span class="spin"></span> Registrando…';
 
-  d.dias  = diasEntre(d.inicio, d.fin);
-  d.total = totalDe(d.dias);
-
-  let msg = '';
+  let r;
   try {
-    if (state.demo) throw new Error('demo');
-    const r = await api(Object.assign({action:'reservar'}, d));
-    if (!r.ok) throw new Error(r.error || 'Error del servidor');
-    msg = r.mensaje || '';
+    r = await apiPost(d);
   } catch (err) {
-    const guardadas = JSON.parse(localStorage.getItem('sv_reservas') || '[]');
-    let c = parseISO(d.inicio); const f = parseISO(d.fin);
-    while (c <= f){ guardadas.push(iso(c)); c.setDate(c.getDate() + 1); }
-    localStorage.setItem('sv_reservas', JSON.stringify(guardadas));
-    msg = state.demo ? 'Guardada localmente (modo demostración).'
-                     : 'No se pudo guardar en el servidor; envíala por WhatsApp para confirmarla.';
+    r = { ok: false, error: err.message === 'demo'
+      ? 'Modo demostración: configura API_URL para reservar.'
+      : 'No se pudo conectar con el servidor. Intenta de nuevo o escríbenos por WhatsApp.' };
   }
+  btn.disabled = false;
+  btn.textContent = 'Continuar al pago';
 
+  if (!r || !r.ok) return toast((r && r.error) || 'No se pudo registrar la reserva.', true);
+
+  // A partir de aquí se usa SOLO lo que respondió el servidor (días y total)
   let c = parseISO(d.inicio); const f = parseISO(d.fin);
   while (c <= f){ state.ocupadas.add(iso(c)); c.setDate(c.getDate() + 1); }
   state.inicio = null; state.fin = null;
   pintarCalendario();
-
-  btn.disabled = false;
-  btn.textContent = 'Confirmar reserva';
-
-  const wa = `Hola ${CONFIG.NEGOCIO}, quiero reservar el patinete.%0A` +
-    `Nombre: ${d.nombre}%0ATel: ${d.telefono}%0ADel ${d.inicio} al ${d.fin} (${d.dias} día(s))%0ATotal: ${money(d.total)}` +
-    (d.notas ? `%0ANotas: ${d.notas}` : '');
-
-  $('#ok-msg').innerHTML = `Reserva del <b>${d.inicio}</b> al <b>${d.fin}</b> por <b>${money(d.total)}</b>.<br>
-                            <span style="font-size:13px">${msg}</span>`;
-  $('#ok-wa').href = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + wa;
-  $('#modal-form').style.display = 'none';
-  $('#modal-ok').style.display = '';
   $('#form-reserva').reset();
-  toast('Reserva registrada correctamente.');
+  $('#f-foto').dispatchEvent(new Event('change'));
+
+  mostrarResultado({
+    titulo: r.pagoUrl ? 'Último paso: el pago' : '¡Reserva registrada!',
+    html: `Reserva <b>${esc(r.reserva)}</b> del <b>${d.inicio}</b> al <b>${d.fin}</b> (${r.dias} día${r.dias === 1 ? '' : 's'}).<br>
+           Punto de entrega: <b>${esc(d.punto)}</b><br>
+           Total a pagar: <b>${money(r.total)}</b><br><span style="font-size:13px">${esc(r.mensaje || '')}</span>`,
+    pagoUrl: r.pagoUrl,
+    waTexto: `Hola ${CONFIG.NEGOCIO}, hice la reserva ${r.reserva} del ${d.inicio} al ${d.fin} (${r.dias} día(s)) por ${money(r.total)}. Punto de entrega: ${d.punto}. Nombre: ${d.nombre}.`
+  });
 });
+
+/* ---- Regreso desde Wompi: ?reserva=SV-XXXX (Wompi agrega los datos de la transacción) ---- */
+async function revisarRegresoDePago(){
+  const q = new URLSearchParams(location.search);
+  const buscar = (k) => { for (const [a, b] of q) if (a.toLowerCase() === k.toLowerCase()) return b; return ''; };
+  const reserva = buscar('reserva') || buscar('identificadorEnlaceComercio');
+  if (!reserva || state.demo) return false;
+  history.replaceState(null, '', location.pathname + '#alquiler');
+  const idTransaccion = buscar('idTransaccion');
+
+  let r = null;
+  for (let intento = 0; intento < 4; intento++){      // el aviso de Wompi puede tardar unos segundos
+    try { r = await api({ action: 'estadoReserva', reserva, idTransaccion }); } catch (e) { r = null; }
+    if (r && r.ok && r.estado !== 'Pago pendiente') break;
+    await new Promise(ok => setTimeout(ok, 3500));
+  }
+  if (!r || !r.ok) { toast('No pudimos consultar tu reserva. Escríbenos por WhatsApp.', true); return true; }
+
+  const pagada = ['Pagada', 'Confirmada', 'Entregada'].includes(r.estado);
+  mostrarResultado({
+    titulo: pagada ? '¡Pago recibido!' : 'Pago aún no confirmado',
+    html: pagada
+      ? `Tu reserva <b>${esc(r.reserva)}</b> del <b>${r.inicio}</b> al <b>${r.fin}</b> está pagada (${money(r.total)}).<br>
+         ${r.punto ? 'Punto de entrega: <b>' + esc(r.punto) + '</b><br>' : ''}
+         <span style="font-size:13px">Te escribiremos por WhatsApp para coordinar la entrega.</span>`
+      : `Aún no vemos el pago de la reserva <b>${esc(r.reserva)}</b> (estado: ${esc(r.estado)}).<br>
+         <span style="font-size:13px">Si ya pagaste, puede tardar unos minutos. Si no, puedes intentarlo de nuevo.</span>`,
+    pagoUrl: pagada ? null : r.pagoUrl,
+    waTexto: `Hola ${CONFIG.NEGOCIO}, consulto por mi reserva ${r.reserva} (${r.inicio} al ${r.fin}).`
+  });
+  return true;
+}
+
+/* ---- Aviso de políticas al entrar (una vez por navegador) ---- */
+function mostrarAviso(){
+  let visto = false;
+  try { visto = localStorage.getItem('sv_politicas_v1') === '1'; } catch (e) {}
+  if (visto) return;
+  const cerrar = () => {
+    try { localStorage.setItem('sv_politicas_v1', '1'); } catch (e) {}
+    $('#aviso').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  $('#aviso-ok').addEventListener('click', cerrar);
+  $('#aviso-leer').addEventListener('click', cerrar);
+  $('#aviso').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('#aviso-ok').focus(), 80);
+}
 
 /* =========================================================
    Arranque
@@ -1777,7 +2078,25 @@ function aplicarContacto(){
   $('#f-tel').href = tel;
   $('#f-mail').textContent = CONFIG.EMAIL;
   $('#f-mail').href = 'mailto:' + CONFIG.EMAIL;
-  $('#precio-dia').textContent = money(CONFIG.PRECIO_DIA).replace('.00','');
+  const m0 = (n) => money(n).replace('.00','');
+  $('#precio-dia').textContent = m0(CONFIG.PRECIO_DIA);
+  $('#precio-extra').textContent = `/ día · desde ${CONFIG.DIAS_SEMANA} días ${m0(CONFIG.PRECIO_DIA_SEMANA)}/día ` +
+    `(${m0(CONFIG.PRECIO_DIA_SEMANA * 7)} la semana) · ${m0(CONFIG.PRECIO_MES)} el mes`;
+  $$('.js-p-dia').forEach(e => e.textContent = m0(CONFIG.PRECIO_DIA));
+  $$('.js-p-sem').forEach(e => e.textContent = m0(CONFIG.PRECIO_DIA_SEMANA));
+  $$('.js-p-sem7').forEach(e => e.textContent = m0(CONFIG.PRECIO_DIA_SEMANA * 7));
+  $$('.js-p-mes').forEach(e => e.textContent = m0(CONFIG.PRECIO_MES));
+  $$('.js-p-dep').forEach(e => e.textContent = m0(CONFIG.DEPOSITO));
+  $$('.js-dep-li').forEach(e => e.style.display = CONFIG.DEPOSITO > 0 ? '' : 'none');
+  $$('.js-tel-txt').forEach(e => e.textContent = CONFIG.TELEFONO);
+
+  const puntos = CONFIG.PUNTOS_ENTREGA;
+  const lista = puntos.join(' · ');   // con " · " porque un punto puede llevar comas en su dirección
+  $$('.js-puntos').forEach(e => e.textContent = lista);
+  const sel = $('#f-punto'), elegido = sel.value;
+  sel.innerHTML = '<option value="" disabled>Elige el que más te convenga</option>' +
+    puntos.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  sel.value = puntos.includes(elegido) ? elegido : '';
 }
 
 $('#prev').addEventListener('click', () => { state.cursor.setMonth(state.cursor.getMonth() - 1); pintarCalendario(); });
@@ -1787,7 +2106,7 @@ $('#year').textContent = new Date().getFullYear();
 $('#foto-ficha').src = $('#foto-scooter').src;   // misma foto incrustada, sin segunda copia
 aplicarContacto();
 pintarSeguridad();
-cargarDisponibilidad();
+cargarDisponibilidad().then(revisarRegresoDePago).then(volvioDePago => { if (!volvioDePago) mostrarAviso(); });
 cargarProductos();
 observarNuevos(document);
 </script>
