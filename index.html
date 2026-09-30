@@ -917,7 +917,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
           <li>El monto lo calcula el sistema de Sivarcito al reservar y es el mismo que se cobra en <b>Wompi</b>; no puede modificarse desde la página.</li>
           <li>Por Wompi se paga <b>solo el alquiler del scooter</b>. Los artículos de la tienda se coordinan por WhatsApp.</li>
           <li>Tus fechas quedan apartadas <b>30 minutos</b> mientras pagas. Si no se completa el pago, se liberan.</li>
-          <li class="js-dep-li">Depósito reembolsable de <span class="js-p-dep">$25</span>: se entrega al recibir el scooter y se devuelve al regresarlo en buen estado. No se cobra en línea.</li>
         </ul>
       </details>
       <details>
@@ -954,7 +953,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <summary>Daños, pérdida o robo</summary>
         <ul>
           <li>El cliente es responsable del scooter y del equipo de seguridad durante el alquiler.</li>
-          <li>Los daños por mal uso se descuentan del depósito; si el costo es mayor, se cobra la diferencia.</li>
+          <li>Los daños por mal uso se cobran al cliente según el costo de reparación o reposición.</li>
           <li>En caso de accidente, robo o pérdida, avisa de inmediato al <b class="js-tel-txt">+503 6272-5022</b>. En caso de robo, presenta la denuncia ante la PNC.</li>
         </ul>
       </details>
@@ -1163,7 +1162,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
       <li><b>Pago seguro con Wompi:</b> el total lo calcula nuestro sistema; por Wompi se paga solo el alquiler del scooter.</li>
       <li><b>Identificación:</b> para alquilar pedimos DUI, pasaporte o licencia de conducir y una foto del documento. Debes ser mayor de 18 años.</li>
       <li><b>Tu documento se borra:</b> la foto se guarda en privado y se elimina al devolver el scooter, o si la reserva se cancela o no se paga.</li>
-      <li><b>Casco obligatorio</b> y uso responsable. Los daños por mal uso se descuentan del depósito.</li>
+      <li><b>Casco obligatorio</b> y uso responsable. Los daños por mal uso corren por cuenta del cliente.</li>
       <li><b>Cancelaciones:</b> reembolso completo cancelando con 24 horas o más de anticipación.</li>
     </ul>
     <button class="btn btn-p" id="aviso-ok" type="button" style="width:100%">Entendido, continuar</button>
@@ -1190,7 +1189,6 @@ const CONFIG = {
   DIAS_SEMANA: 7,
   PRECIO_MES: 180,         // cada 30 días
   DIAS_MES: 30,
-  DEPOSITO: 25,
   PUNTOS_ENTREGA: ["Parque Cuscatlán", "Plaza León (frente a Las Terrazas)"],
   PUNTO_OTRO: "Otro punto (coordinar por WhatsApp)",   // mismo texto que PUNTO_OTRO en Code.gs
   PAGOS_EN_LINEA: false
@@ -1709,7 +1707,6 @@ function htmlResumen(){
     <div class="r"><span>Fin</span><b>${state.fin ? fechaLarga(parseISO(state.fin)) : 'Elige la fecha de fin'}</b></div>
     <div class="r"><span>Días</span><b>${n}</b></div>
     <div class="r"><span>Tarifa</span><b>${n >= CONFIG.DIAS_MES ? money(CONFIG.PRECIO_MES) + ' / mes' : money(tarifaDia(n)) + ' / día'}</b></div>
-    ${CONFIG.DEPOSITO > 0 ? `<div class="r"><span>Depósito (al recibir, no en línea)</span><b>${money(CONFIG.DEPOSITO)}</b></div>` : ''}
     <div class="r tot"><span>Total del alquiler</span><b>${money(total)}</b></div>`;
 }
 function pintarResumen(){
@@ -1734,7 +1731,6 @@ async function cargarDisponibilidad(){
       if (num(c.diasSemana))      CONFIG.DIAS_SEMANA = Number(c.diasSemana) || 7;
       if (num(c.precioMes))       CONFIG.PRECIO_MES = Number(c.precioMes);
       if (num(c.diasMes))         CONFIG.DIAS_MES = Number(c.diasMes) || 30;
-      if (num(c.deposito))        CONFIG.DEPOSITO = Number(c.deposito);
       if (c.telefono)             CONFIG.TELEFONO = String(c.telefono);
       if (c.whatsapp)             CONFIG.WHATSAPP = String(c.whatsapp);
       if (Array.isArray(c.puntosEntrega) && c.puntosEntrega.length) CONFIG.PUNTOS_ENTREGA = c.puntosEntrega;
@@ -2114,8 +2110,6 @@ function aplicarContacto(){
   $$('.js-p-sem').forEach(e => e.textContent = m0(CONFIG.PRECIO_DIA_SEMANA));
   $$('.js-p-sem7').forEach(e => e.textContent = m0(CONFIG.PRECIO_DIA_SEMANA * 7));
   $$('.js-p-mes').forEach(e => e.textContent = m0(CONFIG.PRECIO_MES));
-  $$('.js-p-dep').forEach(e => e.textContent = m0(CONFIG.DEPOSITO));
-  $$('.js-dep-li').forEach(e => e.style.display = CONFIG.DEPOSITO > 0 ? '' : 'none');
   $$('.js-tel-txt').forEach(e => e.textContent = CONFIG.TELEFONO);
 
   const puntos = CONFIG.PUNTOS_ENTREGA;

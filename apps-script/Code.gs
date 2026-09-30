@@ -59,7 +59,6 @@ const CONFIG_INICIAL = [
   ['diasSemana', 7, 'Días mínimos para aplicar el precio semanal'],
   ['precioMes', 180, 'Precio por cada bloque de "diasMes" días. Nunca se cobra más que esto por un bloque'],
   ['diasMes', 30, 'Días que cuenta un mes de alquiler'],
-  ['deposito', 25, 'Depósito reembolsable que se entrega al recibir el scooter. NO se cobra por Wompi. 0 = sin depósito'],
   ['telefono', '+503 6272-5022', 'Teléfono para llamadas que aparece en la página'],
   ['whatsapp', '50362725022', 'Número de WhatsApp sin + ni espacios'],
   ['puntosEntrega', 'Parque Cuscatlán | Plaza León (frente a Las Terrazas)', 'Puntos de entrega y devolución que el cliente puede elegir, separados por |'],
@@ -68,7 +67,7 @@ const CONFIG_INICIAL = [
   ['wompiPruebas', 'NO', 'SI = acepta pagos de prueba de Wompi como pagados. Déjalo en NO cuando cobres de verdad']
 ];
 // Claves que la página puede leer. Nada más de Config sale del servidor.
-const CONFIG_PUBLICA = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'deposito', 'telefono', 'whatsapp', 'puntosEntrega'];
+const CONFIG_PUBLICA = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'telefono', 'whatsapp', 'puntosEntrega'];
 
 // [ID, Ocultar, Categoría, Producto, Descripción, Talla, Precio, Cantidad, Etiqueta, Fotos]
 // Filas con el mismo Producto + Categoría se muestran como UNA tarjeta con botones de talla.
@@ -211,7 +210,7 @@ function actualizarTarifas() {
   const datos = cfg.getDataRange().getValues();
   for (let i = datos.length - 1; i >= 1; i--) {
     const clave = String(datos[i][0]).trim();
-    if (clave === 'precioSemana') { cfg.deleteRow(i + 1); continue; }   // tarifa vieja, ya no se usa
+    if (clave === 'precioSemana' || clave === 'deposito') { cfg.deleteRow(i + 1); continue; }   // ya no se usan
     const nuevo = CONFIG_INICIAL.find(r => r[0] === clave);
     if (nuevo && forzar.indexOf(clave) >= 0) cfg.getRange(i + 1, 2, 1, 2).setValues([[nuevo[1], nuevo[2]]]);
   }
