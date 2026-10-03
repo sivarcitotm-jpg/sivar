@@ -267,17 +267,6 @@ body.nav-open{overflow:hidden}
 .marker--luz{left:11.9%;top:68.4%}
 .marker--range{left:96.9%;top:80.8%}
 
-.socials{
-  position:absolute;right:0;bottom:0;z-index:3;display:flex;align-items:center;
-  gap:clamp(18px,2.2vw,38px);background:#fff;
-  padding:clamp(14px,1.5vw,24px) clamp(20px,2.2vw,38px);
-  border-top-left-radius:36px;border-bottom-right-radius:var(--radius-card);
-}
-.socials a{color:var(--ink);display:grid;place-items:center;transition:opacity .2s ease,transform .2s ease}
-.socials a:hover{opacity:.65;transform:translateY(-2px)}
-.socials svg{width:clamp(20px,1.5vw,26px);height:clamp(20px,1.5vw,26px)}
-.socials--mobile{display:none}
-
 /* ============================================================
    SECCIONES
    ============================================================ */
@@ -474,10 +463,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
 }
 .navsheet__cta:hover{transform:translateY(-2px);background:#e8f6fc}
 .navsheet__cta svg{width:16px;height:16px}
-.navsheet__socials{display:flex;align-items:center;gap:26px;margin-top:clamp(20px,3.4vh,30px)}
-.navsheet__socials a{color:rgba(255,255,255,.72);display:grid;place-items:center;transition:color .2s ease,transform .2s ease}
-.navsheet__socials a:hover{color:#fff;transform:translateY(-2px)}
-.navsheet__socials svg{width:22px;height:22px}
 
 .burger:hover span:nth-child(2){width:22px}
 .burger.is-active span:nth-child(1){transform:translateY(8.5px) rotate(45deg)}
@@ -567,7 +552,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   .hero__glow{top:30%;width:120%;z-index:1;
     background:radial-gradient(closest-side,rgba(120,190,255,.34),rgba(120,190,255,0) 70%)}
   .sp3d__hint{display:none}
-  .marker,.socials{display:none}
+  .marker{display:none}
   .hero__left{
     height:100%;padding:var(--pad);
     padding-top:max(var(--pad),env(safe-area-inset-top));
@@ -581,9 +566,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   .cta{color:#fff;margin-top:32px}
   .cta__icon{border-color:rgba(255,255,255,.6)}
   .cta:hover .cta__icon{background:#fff;border-color:#fff;color:var(--ink)}
-  .socials--mobile{display:flex;position:static;background:transparent;padding:0;margin-top:34px;gap:26px;border-radius:0;z-index:auto}
-  .socials--mobile a{color:#fff}
-  .socials--mobile svg{width:22px;height:22px}
   .fgrid{grid-template-columns:1fr}
   .specs{grid-template-columns:1fr 1fr}
 }
@@ -591,7 +573,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   .hero__title{font-size:clamp(1.8rem,8.6vw,2.4rem)}
   .hero__text{font-size:14px;line-height:1.7}
   .cta{margin-top:26px}
-  .socials--mobile{margin-top:26px}
 }
 @media (max-width:360px){
   :root{--pad:16px}
@@ -611,12 +592,9 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
   .cta{margin-top:16px;gap:12px}
   .cta__icon{width:38px;height:38px}
   .cta__label{font-size:14px}
-  .socials--mobile{margin-top:16px;gap:22px}
-  .socials--mobile svg{width:18px;height:18px}
   .navsheet__panel{padding-top:calc(var(--pad) + 64px)}
   .navsheet__link{font-size:clamp(1.1rem,4.4vh,1.45rem);padding:9px 2px}
   .navsheet__foot{padding-top:16px}
-  .navsheet__socials{margin-top:12px}
 }
 
 /* ---- modal ---- */
@@ -751,11 +729,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
       </div>
     </div>
 
-    <div class="socials anim" style="--d:19">
-      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.29-.04-1.28-.13-2.43-.13-2.4 0-4.05 1.47-4.05 4.17V9.9H7.5V13h2.72v8h3.28z"/></svg></a>
-      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.53 3H20.5l-6.49 7.42L21.75 21h-5.97l-4.68-6.12L5.74 21H2.77l6.94-7.93L2.5 3h6.12l4.23 5.6L17.53 3zm-1.04 16.2h1.65L7.6 4.71H5.83L16.49 19.2z"/></svg></a>
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-    </div>
   </div>
 
   <div class="hero__left">
@@ -799,12 +772,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </span>
       </a>
-
-      <div class="socials socials--mobile">
-        <a class="anim" style="--d:14" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.29-.04-1.28-.13-2.43-.13-2.4 0-4.05 1.47-4.05 4.17V9.9H7.5V13h2.72v8h3.28z"/></svg></a>
-        <a class="anim" style="--d:15" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.53 3H20.5l-6.49 7.42L21.75 21h-5.97l-4.68-6.12L5.74 21H2.77l6.94-7.93L2.5 3h6.12l4.23 5.6L17.53 3zm-1.04 16.2h1.65L7.6 4.71H5.83L16.49 19.2z"/></svg></a>
-        <a class="anim" style="--d:16" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-      </div>
     </div>
 
   </div>
@@ -847,9 +814,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
             <a class="btn btn-d" id="wa-link" href="#" target="_blank" rel="noopener">WhatsApp</a>
             <a class="btn btn-g" id="call-link" href="#">Llamar</a>
           </div>
-          <p style="color:var(--muted);font-size:12.5px;margin:12px 0 0">
-            Horario de atención: lunes a domingo, 7:00 a.m. – 8:00 p.m.
-          </p>
         </div>
       </div>
 
@@ -1010,8 +974,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <h5>Contacto</h5>
         <ul>
           <li><a id="f-tel" href="#">+503 6272-5022</a></li>
-          <li><a id="f-mail" href="#">ventas@sivarcito.com</a></li>
-          <li>Lun – Dom · 7:00 a.m. – 8:00 p.m.</li>
+          <li><a id="f-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
         </ul>
       </div>
     </div>
@@ -1046,11 +1009,6 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
     <div class="navsheet__foot">
       <a class="navsheet__cta" href="#alquiler">Reservar ahora
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <div class="navsheet__socials">
-        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.29-.04-1.28-.13-2.43-.13-2.4 0-4.05 1.47-4.05 4.17V9.9H7.5V13h2.72v8h3.28z"/></svg></a>
-        <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.53 3H20.5l-6.49 7.42L21.75 21h-5.97l-4.68-6.12L5.74 21H2.77l6.94-7.93L2.5 3h6.12l4.23 5.6L17.53 3zm-1.04 16.2h1.65L7.6 4.71H5.83L16.49 19.2z"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-      </div>
     </div>
   </nav>
 </div>
@@ -1181,7 +1139,6 @@ const CONFIG = {
   NEGOCIO:   "Sivarcito",
   TELEFONO:  "+503 6272-5022",
   WHATSAPP:  "50362725022",
-  EMAIL:     "ventas@sivarcito.com",
   MONEDA:    "$",
   // Solo para MOSTRAR un estimado. El monto que se cobra lo calcula Code.gs con la hoja Config.
   PRECIO_DIA: 20,          // 1 a 6 días
@@ -1623,14 +1580,6 @@ function api(params){
   });
 }
 
-function demoOcupadas(){
-  const base = [];
-  [2,3,4,9,10,16,17,18,24,25].forEach(off => {
-    const x = new Date(hoy); x.setDate(x.getDate() + off); base.push(iso(x));
-  });
-  return base.concat(JSON.parse(localStorage.getItem('sv_reservas') || '[]'));
-}
-
 /* =========================================================
    Calendario
    ========================================================= */
@@ -1739,10 +1688,8 @@ async function cargarDisponibilidad(){
     }
     est.textContent = 'Disponibilidad actualizada · ' + new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
   } catch (e){
-    state.ocupadas = new Set(demoOcupadas());
-    est.innerHTML = state.demo
-      ? 'Modo demostración: configura <b>API_URL</b> para conectar Google Sheets.'
-      : 'No se pudo conectar con el servidor; mostrando fechas de ejemplo.';
+    // Sin conexión no se inventan fechas: el servidor vuelve a validar al reservar
+    est.textContent = 'No se pudo cargar la disponibilidad. Recarga la página o escríbenos por WhatsApp.';
   }
   pintarCalendario();
 }
@@ -2100,8 +2047,7 @@ function aplicarContacto(){
   $('#wa-link').href = wa;
   $('#f-tel').textContent = CONFIG.TELEFONO;
   $('#f-tel').href = tel;
-  $('#f-mail').textContent = CONFIG.EMAIL;
-  $('#f-mail').href = 'mailto:' + CONFIG.EMAIL;
+  $('#f-wa').href = wa;
   const m0 = (n) => money(n).replace('.00','');
   $('#precio-dia').textContent = m0(CONFIG.PRECIO_DIA);
   $('#precio-extra').textContent = `/ día · desde ${CONFIG.DIAS_SEMANA} días ${m0(CONFIG.PRECIO_DIA_SEMANA)}/día ` +
