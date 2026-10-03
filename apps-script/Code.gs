@@ -63,11 +63,12 @@ const CONFIG_INICIAL = [
   ['whatsapp', '50362725022', 'Número de WhatsApp sin + ni espacios'],
   ['puntosEntrega', 'Parque Cuscatlán | Plaza León (frente a Las Terrazas)', 'Puntos de entrega y devolución que el cliente puede elegir, separados por |'],
   ['urlSitio', '', 'Dirección pública de la página (https://…). Wompi regresa aquí al cliente después de pagar'],
+  ['scooterMantenimiento', 'SI', 'SI = la página muestra "En mantenimiento" y no acepta reservas. NO = alquiler activo'],
   ['minutosPago', 30, 'Minutos que se apartan las fechas mientras el cliente paga en Wompi'],
   ['wompiPruebas', 'NO', 'SI = acepta pagos de prueba de Wompi como pagados. Déjalo en NO cuando cobres de verdad']
 ];
 // Claves que la página puede leer. Nada más de Config sale del servidor.
-const CONFIG_PUBLICA = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'telefono', 'whatsapp', 'puntosEntrega'];
+const CONFIG_PUBLICA = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'telefono', 'whatsapp', 'puntosEntrega', 'scooterMantenimiento'];
 
 // [ID, Ocultar, Categoría, Producto, Descripción, Talla, Precio, Cantidad, Etiqueta, Fotos]
 // Filas con el mismo Producto + Categoría se muestran como UNA tarjeta con botones de talla.
@@ -372,6 +373,12 @@ function leerConfig() {
 // Opción para quien no conoce los puntos fijos: el lugar se acuerda después por WhatsApp
 const PUNTO_OTRO = 'Otro punto (coordinar por WhatsApp)';
 
+// Si la clave no existe todavía en Config, se asume que SÍ está en mantenimiento
+function enMantenimiento(cfg) {
+  const v = cfg.scooterMantenimiento;
+  return !/^no$/i.test(String(v === undefined || v === '' ? 'SI' : v).trim());
+}
+
 function puntosEntrega(cfg) {
   return String(cfg.puntosEntrega || '').split(/[|\n]+/).map(s => s.trim()).filter(Boolean);
 }
@@ -380,6 +387,7 @@ function configPublica() {
   const c = leerConfig(), out = {};
   CONFIG_PUBLICA.forEach(k => { if (c[k] !== undefined && c[k] !== '') out[k] = c[k]; });
   out.puntosEntrega = puntosEntrega(c);
+  out.scooterMantenimiento = enMantenimiento(c) ? 'SI' : 'NO';
   out.pagosEnLinea = !!credencialesWompi();
   return out;
 }
@@ -478,6 +486,7 @@ function reservar(p) {
   if (errDoc) return { ok: false, error: errDoc };
   if (!p.foto) return { ok: false, error: 'Falta la foto del documento.' };
   const cfg = leerConfig();
+  if (enMantenimiento(cfg)) return { ok: false, error: 'El scooter está en mantenimiento. Por ahora no hay reservas.' };
   let punto = puntosEntrega(cfg).find(x => x === String(p.punto || '').trim());
   if (!punto && p.punto === PUNTO_OTRO) {
     const sugerido = String(p.puntoOtro || '').trim().slice(0, 120);

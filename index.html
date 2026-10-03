@@ -343,6 +343,14 @@ section.block{padding:clamp(64px,9vh,118px) 0;scroll-margin-top:80px}
 .resume .tot{border-top:1px solid var(--line);margin-top:9px;padding-top:10px;font-size:17px}
 .resume .tot b{color:var(--acc-deep);font-size:22px}
 .muted-note{color:var(--muted);font-size:13px;text-align:center;padding:10px 0}
+.tagline--mant{color:#9a5b00;background:rgba(245,166,35,.14);border-color:rgba(245,166,35,.45);margin-left:6px}
+.mant{text-align:center;padding:clamp(28px,5vw,56px) clamp(8px,2vw,20px)}
+.mant__tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:1.6px;
+  text-transform:uppercase;color:#9a5b00;background:rgba(245,166,35,.14);border:1px solid rgba(245,166,35,.45);
+  padding:6px 13px;border-radius:999px}
+.mant__tag::before{content:"";width:7px;height:7px;border-radius:50%;background:#f5a623}
+.mant h3{font-size:clamp(20px,2.2vw,26px);font-weight:600;letter-spacing:-.02em;margin:16px 0 8px}
+.mant p{color:var(--muted);font-size:14.5px;line-height:1.75;max-width:40ch;margin:0 auto 22px}
 
 /* ---- seguridad ---- */
 .safe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
@@ -381,6 +389,23 @@ section.block{padding:clamp(64px,9vh,118px) 0;scroll-margin-top:80px}
 .prod .dots button{width:9px;height:9px;padding:0;border-radius:50%;border:0;cursor:pointer;
   background:rgba(255,255,255,.6);box-shadow:0 0 0 1px rgba(13,27,38,.25);transition:.18s}
 .prod .dots button.on{background:#fff;transform:scale(1.25)}
+.prod .img.foto{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.prod .img.foto img{-webkit-user-drag:none}
+.prod .nav-foto{position:absolute;top:50%;z-index:2;width:38px;height:38px;margin-top:-19px;padding:0 0 2px;border:0;border-radius:50%;
+  background:rgba(255,255,255,.9);color:var(--ink);font:inherit;font-size:22px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 4px 14px rgba(13,27,38,.25);transition:background .18s,transform .18s var(--ease-out)}
+.prod .nav-foto:hover{background:#fff;transform:scale(1.08)}
+.prod .nav-foto:active{transform:scale(.94)}
+.prod .nav-foto:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.prod .nav-foto.prev{left:10px}
+.prod .nav-foto.next{right:10px}
+.prod .cap{position:absolute;left:10px;right:10px;bottom:30px;z-index:2;display:flex;align-items:center;
+  justify-content:space-between;gap:8px;pointer-events:none}
+.prod .cap-n{background:rgba(13,27,38,.8);color:#fff;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;
+  max-width:78%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod .cap-k{background:rgba(255,255,255,.9);color:var(--ink);font-size:11.5px;font-weight:700;padding:5px 9px;border-radius:999px}
+.prod .cap.swap .cap-n{animation:cap-in .38s var(--ease-out)}
+@keyframes cap-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .prod .tallas{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
 .prod .tallas button{font:inherit;font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;cursor:pointer;
   background:var(--bg);color:var(--muted);border:1px solid var(--line);transition:.16s}
@@ -766,7 +791,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
       <p class="hero__text anim" style="--d:11">Scooter Xiaomi 6 por día, semana o mes, con casco, coderas y rodilleras incluidas. Consulta el calendario en tiempo real, elige tus fechas y reserva en menos de un minuto.</p>
 
       <a class="cta" href="#alquiler">
-        <span class="cta__label anim" style="--d:12">Ver disponibilidad</span>
+        <span class="cta__label anim" style="--d:12" id="cta-alquiler">Ver disponibilidad</span>
         <span class="cta__icon anim" style="--d:13">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -794,6 +819,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
                alt="Scooter Xiaomi 6, vista lateral">
         </div>
         <span class="tagline">Scooter Xiaomi 6</span>
+        <span class="tagline tagline--mant" id="tag-mant" hidden>En mantenimiento</span>
         <div class="price-row"><b id="precio-dia">$20</b><span id="precio-extra">/ día · desde 7 días $7/día ($49 la semana) · $180 el mes</span></div>
         <p style="color:var(--muted);font-size:14.5px;line-height:1.8;margin:0">
           Scooter eléctrico Xiaomi 6 con motor sin escobillas de 400 W nominales (800 W de potencia máxima),
@@ -818,6 +844,13 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
       </div>
 
       <div class="card reveal" style="--d:2">
+        <div class="mant" id="mant-box" hidden>
+          <span class="mant__tag">En mantenimiento</span>
+          <h3>El scooter está en mantenimiento</h3>
+          <p>Por ahora no estamos tomando reservas. Escríbenos por WhatsApp y te avisamos en cuanto vuelva a estar disponible.</p>
+          <a class="btn btn-d" id="mant-wa" href="#" target="_blank" rel="noopener">Avisarme por WhatsApp</a>
+        </div>
+        <div id="cal-box">
         <div class="cal-top">
           <button class="nav-b" id="prev" aria-label="Mes anterior">‹</button>
           <h3 id="mes-lbl">—</h3>
@@ -833,6 +866,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <div class="resume" id="resume"></div>
         <button class="btn btn-p" id="btn-reservar" style="width:100%;margin-top:16px" onclick="abrirReserva()">Reservar</button>
         <div class="muted-note" id="estado-datos">Cargando disponibilidad…</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1007,7 +1041,7 @@ footer{background:var(--ink);color:#c3d4e2;padding:clamp(40px,6vh,64px) 0 26px}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
     </ul>
     <div class="navsheet__foot">
-      <a class="navsheet__cta" href="#alquiler">Reservar ahora
+      <a class="navsheet__cta" href="#alquiler"><span id="cta-menu">Reservar ahora</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </nav>
@@ -1148,7 +1182,10 @@ const CONFIG = {
   DIAS_MES: 30,
   PUNTOS_ENTREGA: ["Parque Cuscatlán", "Plaza León (frente a Las Terrazas)"],
   PUNTO_OTRO: "Otro punto (coordinar por WhatsApp)",   // mismo texto que PUNTO_OTRO en Code.gs
-  PAGOS_EN_LINEA: false
+  PAGOS_EN_LINEA: false,
+  // Scooter en pausa: se muestra "En mantenimiento" y no se aceptan reservas.
+  // Se controla desde la hoja Config (scooterMantenimiento = SI / NO).
+  MANTENIMIENTO: true
 };
 
 const $  = (s) => document.querySelector(s);
@@ -1690,6 +1727,7 @@ async function cargarDisponibilidad(){
       if (c.whatsapp)             CONFIG.WHATSAPP = String(c.whatsapp);
       if (Array.isArray(c.puntosEntrega) && c.puntosEntrega.length) CONFIG.PUNTOS_ENTREGA = c.puntosEntrega;
       CONFIG.PAGOS_EN_LINEA = !!c.pagosEnLinea;
+      if (c.scooterMantenimiento !== undefined) CONFIG.MANTENIMIENTO = !/^no$/i.test(String(c.scooterMantenimiento).trim());
       aplicarContacto();
     }
     est.textContent = 'Disponibilidad actualizada · ' + new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
@@ -1743,14 +1781,19 @@ function pintarProductos(){
     const agotado = p.tallas ? tallasDisp.length === 0 : sinStock(p.stock);
     const inicial = p.tallas ? (tallasDisp[0] || p.tallas[0]) : null;
     const badge = agotado ? '<span class="badge out">Agotado</span>' : (p.etiqueta ? `<span class="badge">${esc(p.etiqueta)}</span>` : '');
-    const fotos = p.fotos || [];
+    const fotos = (p.fotos || []).map(leerFoto);
     const precio = inicial ? inicial.precio : p.precio;
+    const varias = fotos.length > 1;
     const media = fotos.length
       ? `<div class="img foto">${badge}
-          <img src="${urlFoto(fotos[0])}" alt="${esc(p.nombre)}" loading="lazy" decoding="async"
+          <img src="${fotos[0].src}" alt="${esc(fotos[0].nombre || p.nombre)}" loading="lazy" decoding="async"
             onerror="this.parentNode.classList.remove('foto');this.outerHTML=art('${p.img || ''}')">
-          ${fotos.length > 1 ? `<div class="dots">${fotos.map((f,k) =>
-            `<button type="button" class="${k ? '' : 'on'}" data-foto="${urlFoto(f)}" aria-label="Foto ${k+1}"></button>`).join('')}</div>` : ''}
+          ${varias ? `
+          <button type="button" class="nav-foto prev" data-dir="-1" aria-label="Foto anterior">‹</button>
+          <button type="button" class="nav-foto next" data-dir="1" aria-label="Foto siguiente">›</button>
+          <div class="cap" aria-live="polite"><span class="cap-n">${esc(fotos[0].nombre || p.nombre)}</span><span class="cap-k">1/${fotos.length}</span></div>
+          <div class="dots">${fotos.map((f,k) =>
+            `<button type="button" class="${k ? '' : 'on'}" data-foto="${f.src}" data-nombre="${esc(f.nombre)}" aria-label="Foto ${k+1}"></button>`).join('')}</div>` : ''}
         </div>`
       : `<div class="img">${badge}${art(p.img)}</div>`;
     const tallas = p.tallas
@@ -1761,8 +1804,8 @@ function pintarProductos(){
         }).join('')}</div>`
       : (p.talla ? `<div class="talla-fija">Talla ${esc(p.talla)}</div>` : '');
     const talla = inicial ? inicial.t : (p.talla || '');
-    return `<article class="prod reveal" style="--d:${i % 4}" data-nombre="${esc(p.nombre)}"
-        data-talla="${esc(talla)}" data-precio="${precio}">
+    return `<article class="prod reveal" style="--d:${i % 4}" data-nombre="${esc(p.nombre)}" data-k="0"
+        data-variante="${esc(fotos[0] ? fotos[0].nombre : '')}" data-talla="${esc(talla)}" data-precio="${precio}">
       ${media}
       <div class="body">
         <span class="cat">${esc(p.categoria)}</span>
@@ -1779,16 +1822,54 @@ function pintarProductos(){
   observarNuevos($('#shop'));
 }
 
+/* Cada foto puede llevar su propio nombre: "26 (1).jpeg | 747 VIP Rose" */
+function leerFoto(f){
+  const [archivo, ...nombre] = String(f).split('|');
+  return { src: urlFoto(archivo.trim()), nombre: nombre.join('|').trim() };
+}
+
+/* Cambia la foto visible de una tarjeta y muestra su nombre (k da la vuelta al llegar al final) */
+function mostrarFoto(card, k){
+  const dots = card.querySelectorAll('.dots button');
+  if (!dots.length) return;
+  k = (k + dots.length) % dots.length;
+  const dot = dots[k], nombre = dot.dataset.nombre || card.dataset.nombre;
+  const img = card.querySelector('.img img');
+  img.src = dot.dataset.foto;
+  img.alt = nombre;
+  dots.forEach(b => b.classList.toggle('on', b === dot));
+  card.dataset.k = k;
+  card.dataset.variante = dot.dataset.nombre || '';
+  const cap = card.querySelector('.cap');
+  cap.querySelector('.cap-n').textContent = nombre;
+  cap.querySelector('.cap-k').textContent = (k + 1) + '/' + dots.length;
+  cap.classList.remove('swap'); void cap.offsetWidth; cap.classList.add('swap');
+}
+
+/* Deslizar con el dedo sobre la foto */
+(function swipeFotos(){
+  let x0 = null, card = null;
+  document.addEventListener('pointerdown', (e) => {
+    const zona = e.target.closest('#shop .img.foto');
+    if (!zona || e.target.closest('button')) return;
+    x0 = e.clientX; card = zona.closest('.prod');
+  });
+  document.addEventListener('pointerup', (e) => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) mostrarFoto(card, Number(card.dataset.k) + (dx < 0 ? 1 : -1));
+  });
+  document.addEventListener('pointercancel', () => { x0 = null; });
+})();
+
 /* Clicks dentro de la tienda: cambiar foto, elegir talla y comprar */
 document.addEventListener('click', (e) => {
   const card = e.target.closest('#shop .prod');
   if (!card) return;
+  const flecha = e.target.closest('.nav-foto');
+  if (flecha){ mostrarFoto(card, Number(card.dataset.k) + Number(flecha.dataset.dir)); return; }
   const dot = e.target.closest('.dots button');
-  if (dot){
-    card.querySelector('.img img').src = dot.dataset.foto;
-    card.querySelectorAll('.dots button').forEach(b => b.classList.toggle('on', b === dot));
-    return;
-  }
+  if (dot){ mostrarFoto(card, [...card.querySelectorAll('.dots button')].indexOf(dot)); return; }
   const t = e.target.closest('.tallas button');
   if (t){
     card.dataset.talla = t.dataset.t;
@@ -1798,7 +1879,8 @@ document.addEventListener('click', (e) => {
     return;
   }
   if (e.target.closest('.js-comprar')){
-    const n = card.dataset.nombre + (card.dataset.talla ? ' — talla ' + card.dataset.talla : '');
+    const n = card.dataset.nombre + (card.dataset.variante ? ' — ' + card.dataset.variante : '') +
+              (card.dataset.talla ? ' — talla ' + card.dataset.talla : '');
     comprar(n, Number(card.dataset.precio));
   }
 });
@@ -1811,7 +1893,19 @@ function comprar(nombre, precio){
 /* =========================================================
    Modal de reserva
    ========================================================= */
+function aplicarMantenimiento(){
+  const m = CONFIG.MANTENIMIENTO;
+  $('#mant-box').hidden = !m;
+  $('#cal-box').hidden = m;
+  $('#tag-mant').hidden = !m;
+  $('#cta-alquiler').textContent = m ? 'Ver scooter' : 'Ver disponibilidad';
+  $('#cta-menu').textContent = m ? 'Ver scooter' : 'Reservar ahora';
+  $('#mant-wa').href = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' +
+    encodeURIComponent('Hola ' + CONFIG.NEGOCIO + ', avísenme cuando el scooter esté disponible para alquilar.');
+}
+
 function abrirReserva(){
+  if (CONFIG.MANTENIMIENTO) return toast('El scooter está en mantenimiento. Por ahora no hay reservas.', true);
   $('#modal-form').style.display = '';
   $('#modal-ok').style.display = 'none';
   $('#modal').classList.add('open');
@@ -2063,6 +2157,8 @@ function aplicarContacto(){
   $$('.js-p-sem7').forEach(e => e.textContent = m0(CONFIG.PRECIO_DIA_SEMANA * 7));
   $$('.js-p-mes').forEach(e => e.textContent = m0(CONFIG.PRECIO_MES));
   $$('.js-tel-txt').forEach(e => e.textContent = CONFIG.TELEFONO);
+
+  aplicarMantenimiento();
 
   const puntos = CONFIG.PUNTOS_ENTREGA;
   const lista = puntos.join(' · ');   // con " · " porque un punto puede llevar comas en su dirección
