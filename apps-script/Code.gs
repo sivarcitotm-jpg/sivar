@@ -70,6 +70,14 @@ const CONFIG_INICIAL = [
 // Claves que la página puede leer. Nada más de Config sale del servidor.
 const CONFIG_PUBLICA = ['precioDia', 'precioDiaSemana', 'diasSemana', 'precioMes', 'diasMes', 'telefono', 'whatsapp', 'puntosEntrega', 'scooterMantenimiento'];
 
+// Nombre que se muestra al pasar cada foto (en el mismo orden que las fotos)
+const NOMBRES_FOTOS = {
+  26: ['747 VIP Rose Sexy', 'Asad', 'Desert Mirage', 'Yara Moi', 'Xerjoff Erba Pura', 'Aqua GOT Pour Homme',
+       '747 VIP Black Noir', 'Invictus', 'Club de Nuit Untold', 'Lucky Island Infinite Charm', 'Aubade', 'Man Trillion'],
+  27: ['Rosado · azul · fucsia · lila', 'Blanco y negro · negro · café', 'Azul · rojo · fucsia · verde · blanco y negro · negro',
+       'Verde militar · multicolor', 'Siete colores disponibles']
+};
+
 // [ID, Ocultar, Categoría, Producto, Descripción, Talla, Precio, Cantidad, Etiqueta, Fotos]
 // Filas con el mismo Producto + Categoría se muestran como UNA tarjeta con botones de talla.
 const CATALOGO_INICIAL = [
@@ -103,9 +111,24 @@ const CATALOGO_INICIAL = [
   [27, false, 'Accesorios', 'Pulseras de paracord', 'Pulsera tejida de paracord con broche. Varios colores disponibles.', '', 7.6, '', '', fotosNumeradas(27, 5)]
 ];
 
-// "26 (1).jpeg", "26 (2).jpeg"… una por línea, como en la columna Fotos
+// "26 (1).jpeg | 747 VIP Rose Sexy"… una por línea, como en la columna Fotos
 function fotosNumeradas(id, n) {
-  return Array.from({ length: n }, (_, i) => id + ' (' + (i + 1) + ').jpeg').join('\n');
+  const nombres = NOMBRES_FOTOS[id] || [];
+  return Array.from({ length: n }, (_, i) =>
+    id + ' (' + (i + 1) + ').jpeg' + (nombres[i] ? ' | ' + nombres[i] : '')).join('\n');
+}
+
+// Escribe en la hoja los nombres de NOMBRES_FOTOS (solo la columna Fotos de esos productos)
+function ponerNombresFotos() {
+  const sh = libro().getSheetByName(HOJAS.productos.nombre);
+  const cFotos = HOJAS.productos.enc.indexOf('Fotos') + 1;
+  let n = 0;
+  filas(HOJAS.productos.nombre).forEach(r => {
+    const fila = CATALOGO_INICIAL.find(c => String(c[0]) === String(r['ID']).trim());
+    if (fila && NOMBRES_FOTOS[fila[0]]) { sh.getRange(r._fila, cFotos).setValue(fila[9]); n++; }
+  });
+  if (SpreadsheetApp.getActive()) SpreadsheetApp.getActive().toast(n + ' producto(s) con nombres en sus fotos', 'Sivarcito');
+  return n;
 }
 
 const CATEGORIAS = ['Ropa', 'Gorras', 'Personalizados', 'Audio', 'Accesorios', 'Ramos', 'Lociones'];
@@ -128,6 +151,7 @@ function onOpen() {
     .addItem('Aplicar tarifas y contacto nuevos', 'actualizarTarifas')
     .addItem('Agregar productos nuevos del catálogo', 'agregarProductosNuevos')
     .addItem('Ordenar productos (quitar filas vacías)', 'ordenarProductos')
+    .addItem('Poner nombres a las fotos (lociones y pulseras)', 'ponerNombresFotos')
     .addToUi();
 }
 

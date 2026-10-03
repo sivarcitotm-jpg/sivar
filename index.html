@@ -1572,10 +1572,14 @@ const PRODUCTOS_DEMO = [
   {item:23, nombre:'Ramo 4', categoria:'Ramos', precio:7.00, img:'ramo',
     fotos:['23.jpeg'], desc:'Ramo decorativo para regalo.', stock:1},
   {item:26, nombre:'Lociones de bolsillo', categoria:'Lociones', precio:7.00, img:'',
-    fotos:Array.from({length:12}, (_, i) => `26 (${i+1}).jpeg`),
+    fotos:['747 VIP Rose Sexy', 'Asad', 'Desert Mirage', 'Yara Moi', 'Xerjoff Erba Pura', 'Aqua GOT Pour Homme',
+           '747 VIP Black Noir', 'Invictus', 'Club de Nuit Untold', 'Lucky Island Infinite Charm', 'Aubade', 'Man Trillion']
+           .map((n, i) => `26 (${i+1}).jpeg | ${n}`),
     desc:'Loción en spray de bolsillo. Varios aromas para dama y caballero; pregúntanos por WhatsApp cuáles hay disponibles.', stock:null},
   {item:27, nombre:'Pulseras de paracord', categoria:'Accesorios', precio:7.60, img:'',
-    fotos:Array.from({length:5}, (_, i) => `27 (${i+1}).jpeg`),
+    fotos:['Rosado · azul · fucsia · lila', 'Blanco y negro · negro · café', 'Azul · rojo · fucsia · verde · blanco y negro · negro',
+           'Verde militar · multicolor', 'Siete colores disponibles']
+           .map((n, i) => `27 (${i+1}).jpeg | ${n}`),
     desc:'Pulsera tejida de paracord con broche. Varios colores disponibles.', stock:null}
 ];
 
