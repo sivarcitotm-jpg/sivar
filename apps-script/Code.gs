@@ -97,10 +97,17 @@ const CATALOGO_INICIAL = [
   [22, false, 'Ramos', 'Ramo 3', 'Ramo decorativo para regalo.', '', 7, 1, '', '22.jpeg'],
   [23, false, 'Ramos', 'Ramo 4', 'Ramo decorativo para regalo.', '', 7, 1, '', '23.jpeg'],
   [24, false, 'Ramos', 'Llavero flor (c/u)', 'Llavero con flor, precio por unidad.', '', 2.5, 4, '', '24.jpeg'],
-  [25, false, 'Audio', 'Audífonos inalámbricos On-Ear, negro', 'Audífonos inalámbricos On-Ear.', '', 14.99, 1, '', '25.jpeg']
+  [25, false, 'Audio', 'Audífonos inalámbricos On-Ear, negro', 'Audífonos inalámbricos On-Ear.', '', 14.99, 1, '', '25.jpeg'],
+  [26, false, 'Lociones', 'Lociones de bolsillo', 'Loción en spray de bolsillo. Varios aromas para dama y caballero; pregúntanos por WhatsApp cuáles hay disponibles.', '', 7, '', '', fotosNumeradas(26, 12)],
+  [27, false, 'Accesorios', 'Pulseras de paracord', 'Pulsera tejida de paracord con broche. Varios colores disponibles.', '', 7.6, '', '', fotosNumeradas(27, 5)]
 ];
 
-const CATEGORIAS = ['Ropa', 'Gorras', 'Personalizados', 'Audio', 'Accesorios', 'Ramos'];
+// "26 (1).jpeg", "26 (2).jpeg"… una por línea, como en la columna Fotos
+function fotosNumeradas(id, n) {
+  return Array.from({ length: n }, (_, i) => id + ' (' + (i + 1) + ').jpeg').join('\n');
+}
+
+const CATEGORIAS = ['Ropa', 'Gorras', 'Personalizados', 'Audio', 'Accesorios', 'Ramos', 'Lociones'];
 
 // Estados de una reserva. "Pendiente" queda por compatibilidad con reservas viejas
 // y para las que no pudieron generar enlace de pago (se cobran a mano).
@@ -118,7 +125,21 @@ function onOpen() {
     .createMenu('Sivarcito')
     .addItem('Crear / reparar hojas', 'configurar')
     .addItem('Aplicar tarifas y contacto nuevos', 'actualizarTarifas')
+    .addItem('Agregar productos nuevos del catálogo', 'agregarProductosNuevos')
     .addToUi();
+}
+
+// Agrega a la hoja Productos las filas de CATALOGO_INICIAL cuyo ID todavía no existe.
+// No toca los productos que ya tienes (ni sus precios o cantidades).
+function agregarProductosNuevos() {
+  const sh = libro().getSheetByName(HOJAS.productos.nombre);
+  const ids = filas(HOJAS.productos.nombre).map(r => String(r['ID']).trim());
+  const nuevos = CATALOGO_INICIAL.filter(r => ids.indexOf(String(r[0])) < 0);
+  if (nuevos.length) {
+    sh.getRange(sh.getLastRow() + 1, 1, nuevos.length, nuevos[0].length).setValues(nuevos);
+    configurar();   // casillas, categorías y formato de precio en las filas nuevas
+  }
+  return nuevos.length + ' producto(s) agregado(s)';
 }
 
 /* =====================================================================
