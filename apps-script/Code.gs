@@ -127,6 +127,7 @@ function onOpen() {
     .addItem('Crear / reparar hojas', 'configurar')
     .addItem('Aplicar tarifas y contacto nuevos', 'actualizarTarifas')
     .addItem('Agregar productos nuevos del catálogo', 'agregarProductosNuevos')
+    .addItem('Ordenar productos (quitar filas vacías)', 'ordenarProductos')
     .addToUi();
 }
 
@@ -137,10 +138,36 @@ function agregarProductosNuevos() {
   const ids = filas(HOJAS.productos.nombre).map(r => String(r['ID']).trim());
   const nuevos = CATALOGO_INICIAL.filter(r => ids.indexOf(String(r[0])) < 0);
   if (nuevos.length) {
-    sh.getRange(sh.getLastRow() + 1, 1, nuevos.length, nuevos[0].length).setValues(nuevos);
+    // getLastRow() no sirve aquí: las casillas de "Ocultar" cuentan como contenido hasta el final de la hoja
+    sh.getRange(ultimaFilaConProducto(sh) + 1, 1, nuevos.length, nuevos[0].length).setValues(nuevos);
     configurar();   // casillas, categorías y formato de precio en las filas nuevas
   }
+  ordenarProductos();
   return nuevos.length + ' producto(s) agregado(s)';
+}
+
+function ultimaFilaConProducto(sh) {
+  const col = HOJAS.productos.enc.indexOf('Producto') + 1;
+  const v = sh.getRange(1, col, sh.getMaxRows(), 1).getValues();
+  for (let i = v.length - 1; i >= 1; i--) if (String(v[i][0]).trim()) return i + 1;
+  return 1;
+}
+
+// Junta todos los productos arriba (sin filas vacías en medio), ordenados por ID.
+// No cambia ningún dato: solo mueve las filas.
+function ordenarProductos() {
+  const sh = libro().getSheetByName(HOJAS.productos.nombre);
+  const n = HOJAS.productos.enc.length;
+  const total = sh.getMaxRows() - 1;
+  const datos = sh.getRange(2, 1, total, n).getValues();
+  const llenas = datos.filter(r => String(r[3]).trim());   // columna Producto
+  const num = (x) => (isNaN(Number(x)) || x === '' ? Infinity : Number(x));
+  llenas.sort((a, b) => num(a[0]) - num(b[0]));
+  sh.getRange(2, 1, total, n).clearContent();
+  sh.getRange(2, 2, total).insertCheckboxes();   // primero las casillas (las deja en falso)…
+  if (llenas.length) sh.getRange(2, 1, llenas.length, n).setValues(llenas);   // …y luego los datos con su "Ocultar"
+  if (SpreadsheetApp.getActive()) SpreadsheetApp.getActive().toast(llenas.length + ' productos ordenados', 'Sivarcito');
+  return llenas.length + ' productos ordenados';
 }
 
 /* =====================================================================
@@ -156,7 +183,11 @@ function configurar() {
   }
   const n = HOJAS.productos.enc.length;
   const filasProd = prod.getMaxRows() - 1;
-  prod.getRange(2, 2, filasProd).insertCheckboxes();
+  // insertCheckboxes() pone todo en falso: se guardan y se reponen los productos ya ocultos
+  const colOcultar = prod.getRange(2, 2, filasProd);
+  const ocultos = colOcultar.getValues().map(r => [r[0] === true || /^true$/i.test(String(r[0]))]);
+  colOcultar.insertCheckboxes();
+  colOcultar.setValues(ocultos);
   prod.getRange(2, 3, filasProd).setDataValidation(
     SpreadsheetApp.newDataValidation().requireValueInList(CATEGORIAS, true).setAllowInvalid(true).build());
   prod.getRange(2, 7, filasProd).setNumberFormat('$0.00');
